@@ -1,81 +1,62 @@
-# 📦 @jiksdi/twn-ui
+# @jiksdi/twn-ui
 
-A small, production-ready **React + Tailwind CSS** UI library that works in **React** and **Next.js** apps. Ships typed components, tree-shakable builds (ESM + CJS), and zero runtime dependencies beyond React.
+A premium, flexible React + Tailwind UI component library.
 
-> Components: **Button, Card, Badge, Typography, Modal, Form, Field**
-
----
+## Features
+- Prebuilt components: Button, Card, Badge, Typography, Modal, Form, Field
+- `scheme` prop for color themes, `variant` prop for layout styles
+- Uses Tailwind's theme config for full design flexibility
+- Built-in `ThemeProvider` for runtime theme customization (colors, radii, etc.)
+- ESLint + Prettier setup for consistent code quality and style
+- Works with both React and Next.js
 
 ## Installation
 ```bash
 npm install @jiksdi/twn-ui
-# or
-yarn add @jiksdi/twn-ui
 ```
 
-You must also have **React 18+**, **TailwindCSS 3+**, **PostCSS**, and **Autoprefixer** installed in your project.
-
----
-
-## Tailwind configuration for consumers
-This package does **not** bundle Tailwind configuration. Consumers must set up Tailwind in their own project and can freely define `theme`, `plugins`, `darkMode`, etc.
-
-Example `tailwind.config.ts`:
-```ts
-import type { Config } from "tailwindcss";
-
-const config: Config = {
-  content: [
-    "./src/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/@jiksdi/twn-ui/dist/**/*.{js,css}"
-  ],
-  theme: {
-    extend: {}
-  },
-  plugins: []
-};
-
-export default config;
-```
-
----
+This package expects **React** and **Tailwind CSS** to be installed in your project.
 
 ## Usage
 ```tsx
-import { Button, Card, Badge, H2, P, Modal, Form, Field } from "@jiksdi/twn-ui";
-import "@jiksdi/twn-ui/styles.css";
+import { Button, ThemeProvider } from '@jiksdi/twn-ui';
 
-export default function App() {
+export default function Example() {
   return (
-    <div className="p-6">
-      <H2>Example UI</H2>
-      <Button>Click me</Button>
-    </div>
+    <ThemeProvider value={{ colors: { primary: '#4f46e5' }, borderRadius: { xl: '1rem' } }}>
+      <Button scheme="primary" variant="solid">Click Me</Button>
+    </ThemeProvider>
   );
 }
 ```
 
----
+## Tailwind Configuration
+Add your custom colors, borders, and radii in your project's `tailwind.config.js`. The components will automatically use these values unless overridden by `ThemeProvider`.
 
-## package.json (important fields)
-```json
-{
-  "name": "@jiksdi/twn-ui",
-  "version": "0.1.0",
-  "description": "A typed React + Tailwind UI library (Button, Card, Badge, Typography, Modal, Form, Field)",
-  "license": "MIT",
-  "author": "Hardi <jiksdi12@gmail.com>",
-  "peerDependencies": {
-    "react": ">=18",
-    "react-dom": ">=18",
-    "tailwindcss": ">=3.0.0",
-    "postcss": ">=8.0.0",
-    "autoprefixer": ">=10.0.0"
-  }
+Example:
+```js
+// tailwind.config.js
+export default {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#4f46e5',
+        danger: '#ef4444',
+      },
+      borderRadius: {
+        xl: '1rem',
+      },
+    },
+  },
 }
 ```
 
----
+## Development
+```bash
+npm install
+npm run lint
+npm run format
+```
 
-**Author:** Hardi (<jiksdi12@gmail.com>)  
-**License:** MIT
+## License
+MIT © Hardi <jiksdi12@gmail.com>
