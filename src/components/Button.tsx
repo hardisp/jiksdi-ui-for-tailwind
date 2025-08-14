@@ -1,49 +1,40 @@
-import * as React from "react";
-import { cn } from "@/utils/cn";
-
-export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger" | "link";
-export type ButtonSize = "sm" | "md" | "lg";
+// src/components/Button.tsx
+import React from 'react';
+import clsx from 'clsx';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: ButtonVariant;
-  size?: ButtonSize;
-  loading?: boolean;
+  scheme?: string;
+  variant?: 'solid' | 'outline' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  rounded?: string;
 }
 
-const base =
-  "inline-flex items-center justify-center rounded-2xl font-medium transition-colors disabled:opacity-60 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2";
+export const Button: React.FC<ButtonProps> = ({
+  scheme = 'primary',
+  variant = 'solid',
+  size = 'md',
+  rounded = 'rounded-lg',
+  className,
+  ...props
+}) => {
+  const baseStyles = `${rounded} font-medium focus:outline-none focus:ring-2 transition-colors disabled:opacity-50 disabled:pointer-events-none`;
 
-const sizeMap: Record<ButtonSize, string> = {
-  sm: "h-8 px-3 text-sm",
-  md: "h-10 px-4 text-base",
-  lg: "h-12 px-6 text-lg"
+  const variantClasses = {
+    solid: `bg-${scheme}-500 text-white hover:bg-${scheme}-600 focus:ring-${scheme}-400`,
+    outline: `border border-${scheme}-500 text-${scheme}-500 hover:bg-${scheme}-50 focus:ring-${scheme}-400`,
+    ghost: `bg-transparent text-${scheme}-500 hover:bg-${scheme}-50 focus:ring-${scheme}-400`,
+  };
+
+  const sizeClasses = {
+    sm: 'px-3 py-1.5 text-sm',
+    md: 'px-4 py-2 text-base',
+    lg: 'px-5 py-3 text-lg',
+  };
+
+  return (
+    <button
+      className={clsx(baseStyles, variantClasses[variant], sizeClasses[size], className)}
+      {...props}
+    />
+  );
 };
-
-const variantMap: Record<ButtonVariant, string> = {
-  primary: "bg-blue-600 text-white hover:bg-blue-700 focus-visible:ring-blue-600",
-  secondary: "bg-gray-200 text-gray-900 hover:bg-gray-300 focus-visible:ring-gray-400",
-  ghost: "bg-transparent hover:bg-gray-100 text-gray-900 focus-visible:ring-gray-400",
-  danger: "bg-red-600 text-white hover:bg-red-700 focus-visible:ring-red-600",
-  link: "bg-transparent underline-offset-4 hover:underline text-blue-600"
-};
-
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = "primary", size = "md", loading = false, children, ...props }, ref) => {
-    return (
-      <button
-        ref={ref}
-        className={cn(base, sizeMap[size], variantMap[variant], className)}
-        aria-busy={loading || undefined}
-        {...props}
-      >
-        {loading ? (
-          <span className="pointer-events-none select-none">Loading…</span>
-        ) : (
-          children
-        )}
-      </button>
-    );
-  }
-);
-
-Button.displayName = "Button";

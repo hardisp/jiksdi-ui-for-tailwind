@@ -21,20 +21,30 @@
     "dev": "vite",
     "build": "tsc -p tsconfig.build.json && vite build && cp src/styles.css dist/styles.css",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "lint": "npx eslint \"src/**/*.{js,ts,tsx}\"",
+    "format": "npx prettier --write \"src/**/*.{js,ts,tsx,json,css,md}\""
   },
   "peerDependencies": {
     "react": ">=18",
-    "react-dom": ">=18"
+    "react-dom": ">=18",
+    "tailwindcss": ">=3.0.0",
+    "postcss": ">=8.0.0",
+    "autoprefixer": ">=10.0.0",
+    "clsx": ">=2.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.73",
     "@types/react-dom": "^18.2.25",
-    "autoprefixer": "^10.4.19",
-    "postcss": "^8.4.41",
-    "tailwindcss": "^3.4.10",
     "typescript": "^5.5.4",
     "vite": "^5.4.1",
-    "@vitejs/plugin-react": "^4.3.1"
+    "@vitejs/plugin-react": "^4.3.1",
+    "eslint": "^8.56.0",
+    "prettier": "^3.0.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-react": "^7.33.0"
   }
 }

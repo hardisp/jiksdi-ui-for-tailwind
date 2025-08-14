@@ -1,29 +1,28 @@
-import * as React from "react";
-import { cn } from "@/utils/cn";
 
-export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {}
+// src/components/Card.tsx
+import React from 'react';
+import clsx from 'clsx';
 
-export const Card = React.forwardRef<HTMLDivElement, CardProps>(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("rounded-2xl border border-gray-200 bg-white shadow-sm", className)} {...props} />
-));
-Card.displayName = "Card";
+export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+  scheme?: string;
+  variant?: 'solid' | 'outline';
+  rounded?: string;
+  padding?: string;
+}
 
-export const CardHeader: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className, ...props }) => (
-  <div className={cn("p-6 pb-2", className)} {...props} />
-);
+export const Card: React.FC<CardProps> = ({
+  scheme = 'gray',
+  variant = 'solid',
+  rounded = 'rounded-lg',
+  padding = 'p-4',
+  className,
+  ...props
+}) => {
+  const variantClasses = {
+    solid: `bg-${scheme}-50 text-${scheme}-900`,
+    outline: `border border-${scheme}-200 bg-white text-${scheme}-900`,
+  };
 
-export const CardTitle: React.FC<React.HTMLAttributes<HTMLHeadingElement>> = ({ className, ...props }) => (
-  <h3 className={cn("text-lg font-semibold leading-tight", className)} {...props} />
-);
+  return <div className={clsx(rounded, padding, variantClasses[variant], className)} {...props} />;
+};
 
-export const CardDescription: React.FC<React.HTMLAttributes<HTMLParagraphElement>> = ({ className, ...props }) => (
-  <p className={cn("text-sm text-gray-500", className)} {...props} />
-);
-
-export const CardContent: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className, ...props }) => (
-  <div className={cn("p-6 pt-2", className)} {...props} />
-);
-
-export const CardFooter: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className, ...props }) => (
-  <div className={cn("p-6 pt-0", className)} {...props} />
-);
