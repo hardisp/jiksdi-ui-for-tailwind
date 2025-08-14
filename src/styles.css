@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Component-level CSS (minimal, just helpers)
+   Keep components primarily utility-first to avoid shipping large CSS */
+
+:root {
+  --ring: 0 0% 0%;
+}
+
+.focus-ring {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.35);
+}
